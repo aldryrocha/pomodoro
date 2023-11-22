@@ -173,11 +173,10 @@ document.addEventListener('TarefaFinalizada', function(e){
     }
 })
 
+/* MY WAY
 AllTasksDelete.addEventListener('click', () => {
     taskListContainer.remove();
     tarefas.length = 0;
-    tasksItemSelect = null;
-    selectTasks = null;
     localStorage.clear();
     clearForm();
 })
@@ -187,8 +186,19 @@ AllConcludeTasksDelete.addEventListener('click', () => {
         button.remove();
     })
     tarefas = tarefas.filter(task => task.concluida != true);    
-    tasksItemSelect = null;//quando deleta uma, nao quer que nenhuma tarefa fique selecionada
-    selectTasks = null;//quando deleta uma, nao quer que nenhuma tarefa fique selecionada
     updateLocalStorage();
     clearForm();
-})
+})*/
+/* PROFESSOR WAY */
+const removerTarefas = (somenteConcluidas) => {
+    const seletor = somenteConcluidas ? '.app__section-task-list-item-complete' : '.app__section-task-list-item'
+    document.querySelectorAll(seletor).forEach((element) => {
+        element.remove();
+    });
+
+    tarefas = somenteConcluidas ? tarefas.filter(t => !t.concluida) : []
+    updateLocalStorage()
+}
+
+AllConcludeTasksDelete.addEventListener('click', () => removerTarefas(true))
+AllTasksDelete.addEventListener('click', () => removerTarefas(false))
